@@ -3,6 +3,8 @@ package Data::MuFormX::Registry;
 use Module::Pluggable::Object;
 use Moo;
 
+our $VERSION = '0.001';
+
 sub config { return %{+{}} }
 
 has 'config' => (
@@ -23,10 +25,10 @@ has 'form_namespace' => (
     my $package = ref($_[0]);
     my @parts = split('::', $package);
     my @prefix = (@parts[0..($#parts-1)]);
-    my $component_namespace = join('::',
+    my $form_namespace = join('::',
       @prefix,
       $_[0]->_default_form_namespace_part);
-    return $component_namespace;
+    return $form_namespace;
   }
 
 has 'form_packages' => (
@@ -173,6 +175,11 @@ You may also subclass for hardcoded defaults
     my $registry = MyApp::MyRegistry->new;
 
 =head1 DESCRIPTION
+
+B<NOTE> Early access; the docs do not describe all existing features (read
+the source :) ) and I reserve the right to break stuff if that's the only way
+to fix deep problems.  On the other hand there's not a ton of stuff here so
+its probably ok...
 
 This is a wrapper on top of L<Module::Pluggable::Object> to make it easier
 to load up and create a namespace of L<Data::MuForm> based form validation
